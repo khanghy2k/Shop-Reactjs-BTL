@@ -1,6 +1,5 @@
 import React from 'react'
 import './Footer.css';
-import logo from '../../assets/images/eco-logo.png'
 import { Container,Row,Col,ListGroup,ListGroupItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
@@ -10,22 +9,21 @@ const Footer = () => {
   return <footer className='footer' >
     <Container>
       <Row>
-        <Col lg='4'>
+        <Col lg='4' className='mb-4' md='6'>
         <div className='logo'>
-          <img src={logo} alt='logo' />
           <div>
-            <h1>Multimart</h1>
+            <h1 className='text-white'>Multimart</h1>
           </div>
         </div>
         <p className='footer__text mt-4'>Thank you for visiting our website. We strive to provide the best experience for our users.
               If you have any questions or feedback, please don't hesitate to contact us.</p>
         </Col>
 
-        <Col lg='3'>
+        <Col lg='3' md='3' className='mb-4'>
         <div className='footer__quick-links'>
           <h4 className='quick__links-title'>Top Categories</h4>
           <ListGroup>
-            <ListGroupItem className='ps-0 border-0'>
+            <ListGroupItem className='ps-0 border-0 '>
               <Link to="#">Mobiles Phone</Link>
             </ListGroupItem>
 
@@ -44,7 +42,7 @@ const Footer = () => {
         </div>
         </Col>
 
-        <Col lg='2'>
+        <Col lg='2' md='3' className='mb-4'>
         <div className='footer__quick-links'>
           <h4 className='quick__links-title'>Useful Links</h4>
           <ListGroup>
@@ -67,16 +65,16 @@ const Footer = () => {
         </div>
         </Col>
 
-        <Col lg='3'>
+        <Col lg='3' md='4' className='mb-4'>
         <div className='footer__quick-links'>
           <h4 className='quick__links-title'>Contact</h4>
-          <ListGroup>
-            <ListGroupItem className='ps-0 border-0'>
+          <ListGroup className='footer__contact'>
+            <ListGroupItem className='ps-0 border-0 d-flex align-items-center gap-2'>
               <span><i class="ri-map-pin-range-line"></i></span>
               <p>77 Trần Thái Tông , Huế</p>
             </ListGroupItem>
 
-            <ListGroupItem className='ps-0 border-0'>
+            <ListGroupItem className='ps-0 border-0 d-flex align-items-center gap-2'>
             <span><i class="ri-phone-line"></i></span>
               <p>0385021975</p>
             </ListGroupItem>
@@ -89,7 +87,7 @@ const Footer = () => {
         </div>
         </Col>
         <Col lg='12'>
-          <p className='footer__copyright'>Copyright {year}</p>
+          <p className='footer__copyright'>Copyright {year} by Khang Hy</p>
         </Col>
       </Row>
     </Container>
