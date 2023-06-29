@@ -33,3 +33,13 @@
 .search__box span {
     color: var(--primary-color);
 }
+@media only screen and (max-width:768px) {
+    .filter__wigdet{
+        margin-bottom: 30px;
+
+    }
+    .filter__wigdet select {
+        padding: 7px 20px;
+        font-size: 0.9rem;
+    }
+}
