@@ -69,11 +69,39 @@
     z-index:10 ;
 }
 
-.nav__icons span img {
+.nav__icons .profile img {
     width: 30px;
     height: 30px;
     cursor: pointer;
+    border-radius: 50%;
 }
+.nav__icons .profile {
+    position: relative;
+    z-index: 9;
+}
+
+.nav__icons .profile .profile__actions {
+    position: absolute;
+    top: 98%;
+    left: 0;
+    width: 100px;
+    z-index: 10;
+    padding: 15px;
+    align-items: center;
+    flex-direction: column;
+    background: var(--primary-color);
+    line-height: 30px;
+    color: #fff;
+    border-radius: 10px;
+    display: none;
+    cursor: pointer;
+  }
+  
+  .show__profileActions {
+    display: block; 
+  }
+
+
 
 .mobile__menu {
     font-size: 1.3rem;
