@@ -1,20 +1,15 @@
-  import React,{useRef,useEffect} from 'react';
+  import React,{useRef,useEffect,useState} from 'react';
   import './Header.css'
-
   import { motion } from 'framer-motion';
-
   import { Link, NavLink,useNavigate } from 'react-router-dom';
-
   import logo from '../../assets/images/eco-logo.png'
-
   import userIcon from '../../assets/images/user-icon.png'
-
   import { Container, Row } from 'reactstrap';
   import { useSelector } from 'react-redux';
   import useAuth from '../../custom-hooks/useAuth';
   import {signOut} from 'firebase/auth';
   import {auth} from "../../firebase.config"
-import { toast } from 'react-toastify';
+  import { toast } from 'react-toastify';
 
   const nav__links = [
     {
@@ -35,12 +30,14 @@ import { toast } from 'react-toastify';
 
   const headerRef = useRef(null);
   const totalQuantity = useSelector(state => state.cart.totalQuantity);
-  const profileActionRef = useRef(null);
+  const profileAtionRef = useRef(null);
 
 
   const menuRef = useRef(null);
   const navigate = useNavigate();
-  const {currentUser} = useAuth()  
+  const {currentUser} = useAuth();
+ const [showProfileActions, setShowProfileActions] = useState(false);
+
 
 
   const stickyHeaderFunc = () =>{
@@ -74,8 +71,12 @@ import { toast } from 'react-toastify';
     navigate("/cart");  
   };
 
-  const toggleProfileActions = () => profileActionRef.current.classList
-  .toggle('show__profileActions');
+  const toggleProfileActions = () => {
+    setShowProfileActions(!showProfileActions);
+  };
+
+  
+  
   
 
 
@@ -110,7 +111,10 @@ import { toast } from 'react-toastify';
           <i class="ri-heart-line"></i>
           <span className='badge'>1</span>
           </span>
-            <span className='cart__icon' onClick={navigateToCart} >
+            <span className='cart__icon'
+             onClick={navigateToCart} 
+             
+             >
             <i class="ri-shopping-bag-line"></i>
             <span className='badge'>{totalQuantity}</span>
             </span>
@@ -120,11 +124,12 @@ import { toast } from 'react-toastify';
              whileTap={{ scale: 1.2 }} 
                src={currentUser ? currentUser.photoURL : userIcon} 
                alt=''
-             onClick={toggleProfileActions}
+               onClick={toggleProfileActions}
        />
+        {showProfileActions && (
             <div 
             className='profile__actions' 
-            ref={profileActionRef}
+            ref={profileAtionRef}
             onClick={toggleProfileActions}
             >
               {
@@ -134,9 +139,10 @@ import { toast } from 'react-toastify';
                  justity-content-center flex-column'>
                   <Link to='/Signup'>Signup</Link>
                   <Link to='/login'>Login</Link>
+                  <Link to='/dashboard'>Dashboard</Link>
                 </div>
               }
-            </div>
+            </div>)}
             </div>
             <div className='mobile__menu'>
             <span onClick={menuToggle}>

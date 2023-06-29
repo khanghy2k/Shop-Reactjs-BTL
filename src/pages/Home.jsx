@@ -55,7 +55,7 @@ import counterImg from '../assets/images/counter-timer-img.png'
       <p className='hero__subtitle'>Trending product in {year} </p>
       <h2>Make Your Interior More Minimalistics & Modern </h2>
       <p>Creating a minimalistic and modern interior can bring a sense of simplicity, elegance, and sophistication to your space.</p>
-      <motion.button whileTap={{scale : 1.2}}  className='buy__btn'><Link to='shop'>SHOP NOW</Link></motion.button>
+      <motion.button whileTap={{scale : 1.2}}  className='buy__btn'><Link to='/shop'>SHOP NOW</Link></motion.button>
       </div>
       </Col>
 

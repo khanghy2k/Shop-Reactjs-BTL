@@ -51,6 +51,7 @@
 .cart__icon {
     position: relative;
 }
+
 .badge {
     position: absolute;
     top: 25%;
@@ -92,12 +93,12 @@
     background: var(--primary-color);
     line-height: 30px;
     color: #fff;
-    border-radius: 10px;
-    display: none;
+    border-radius: 10px; 
+    
     cursor: pointer;
   }
   
-  .show__profileActions {
+.show__profileActions {
     display: block; 
   }
 

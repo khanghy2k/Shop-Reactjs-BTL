@@ -50,7 +50,9 @@ const Shop = () => {
     const searchedProducts = products.filter(item => item.productName.toLowerCase().includes(searchTerm.toLowerCase()));
 
     setProductsData(searchedProducts)
-  }
+  };
+
+  
 
 
   return <Helmet title='shop'>
