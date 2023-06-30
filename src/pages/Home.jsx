@@ -1,24 +1,24 @@
 import React,{useState,useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import products from '../assets/data/products'
-
-
-
 import Helmet from '../components/Helmet/Helmet';
 import '../styles/home.css';
 import { Container,Row,Col } from 'reactstrap';
-
 import HeroImg from '../assets/images/hero-img.png';
 import Services from '../services/Services';
 import ProductList from '../components/UI/ProductList';
 import Clock from '../components/UI/Clock';
-import counterImg from '../assets/images/counter-timer-img.png'
+import counterImg from '../assets/images/counter-timer-img.png';
+import useGetData from '../custom-hooks/useGetData';
+
 
 
 
 
   const Home = () => {
+
+    const {data:products,loading} = useGetData('products')
+
 
   const [trendingProducts,setTrendingProducts] = useState([]);
   const [bestSalesProducts,setBestsalesProducts] = useState([]);
@@ -43,7 +43,7 @@ import counterImg from '../assets/images/counter-timer-img.png'
 
 
 
-  },[]);
+  },[products]);
 
 
   return  <Helmet title={'Home'}>
@@ -74,7 +74,11 @@ import counterImg from '../assets/images/counter-timer-img.png'
                   <Col lg='12' className='text-center'>
                     <h2 className='section__title'>Trending Products</h2>
                   </Col>
-                  <ProductList data={trendingProducts}/>
+                  {
+                    loading ? <h5 className='fw-bold'>Loading....</h5> :  
+                    <ProductList data={trendingProducts}/>
+                  }
+                 
                 </Row>
               </Container>
             </section>
@@ -85,8 +89,11 @@ import counterImg from '../assets/images/counter-timer-img.png'
                   <Col lg='12' className='text-center'>
                     <h2 className='section__title'>Best Sales</h2>
                   </Col>
-
-                  <ProductList  data={bestSalesProducts}/>
+                  {
+                    loading ? <h5 className='fw-bold'>Loading....</h5> :  
+                    <ProductList  data={bestSalesProducts}/>
+                  }
+                 
                 </Row>
               </Container>
             </section>
@@ -120,8 +127,17 @@ import counterImg from '../assets/images/counter-timer-img.png'
                 <Col lg='12' className='text-center mb-5'>
                     <h2 className='section__title'>New Arrivals</h2>
                   </Col>
-                  <ProductList data={mobileProduct} />
-                  <ProductList data={wirelessProduct} />
+                  {
+                    loading ? <h5 className='fw-bold'>Loading....</h5> :  
+                    <ProductList  data={mobileProduct}/>
+                  }
+                 
+                  {
+                    loading ? <h5 className='fw-bold'>Loading....</h5> :  
+                    <ProductList  data={wirelessProduct}/>
+                  }
+                 
+                 
                 </Row>
               </Container>
             </section>
@@ -132,7 +148,11 @@ import counterImg from '../assets/images/counter-timer-img.png'
                 <Col lg='12' className='text-center mb-5'>
                     <h2 className='section__title'>Popular in Category</h2>
                   </Col>
-                  <ProductList data={popularProducts} />
+                  {
+                    loading ? <h5 className='fw-bold'>Loading....</h5> :  
+                    <ProductList  data={popularProducts}/>
+                  }
+                 
                 </Row>
               </Container>
             </section>

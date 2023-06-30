@@ -1,7 +1,12 @@
 
 
-import React,{useState} from 'react'
-import { Form,FormGroup,Container,Row,Col } from 'reactstrap'
+import React,{useState} from 'react';
+import { Form,FormGroup,Container,Row,Col } from 'reactstrap';
+import {toast} from 'react-toastify';
+import { db,storage } from '../firebase.config';
+import {ref,uploadBytesResumable,getDownloadURL} from 'firebase/storage';
+import { collection,addDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
 const AddProducts = () => {
   const [enterTitle,setEnterTitle] = useState('')
@@ -10,29 +15,78 @@ const AddProducts = () => {
   const [enterCategory,setEnterCategory] = useState('')
   const [enterPrice,setEnterPrice] = useState('')
   const [enterProductImg,setProductImg] = useState(null)
+  const [loading,setLoading] = useState(false)
+
+  const navigate = useNavigate()
+
+
 
 
   const addProduct = async(e) =>{
-    e.preventDefault()
+    e.preventDefault();
+    setLoading(true)
 
-    const product = {
-      title:enterTitle,
-      shortDesc:enterShortDesc,
-      description:enterDescription,
-      category:enterCategory,
-      price:enterPrice,
-      imgUrl:enterProductImg
+    // const product = {
+    //   title:enterTitle,
+    //   shortDesc:enterShortDesc,
+    //   description:enterDescription,
+    //   category:enterCategory,
+    //   price:enterPrice,
+    //   imgUrl:enterProductImg
+    // }
+
+    // add product to the firebase database
+    try {
+      const docRef = await collection(db, 'products');
+      const storageRef = ref(
+        storage,
+        `productImages/${Date.now() + enterProductImg.name}`
+      );
+      const uploadTask = uploadBytesResumable(storageRef, enterProductImg);
+    
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          // Upload progress or other states
+        },
+        (error) => {
+          toast.error('Image upload failed: ' + error.message);
+        },
+        async () => {
+          try {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            await addDoc(docRef, {
+              productName: enterTitle,
+              shortDesc: enterShortDesc,
+              description: enterDescription,
+              category: enterCategory,
+              price: enterPrice,
+              imgUrl: downloadURL,
+            });
+            setLoading(false)
+            toast.success('Product successfully added!');
+            navigate('/dashboard/all-products');
+
+
+          } catch (error) {
+            setLoading(false)
+            toast.error('Error adding product: ' + error.message);
+          }
+        }
+      );
+    } catch (error) {
+      toast.error('Error uploading image: ' + error.message);
     }
-    console.log(product)
-
-  }
+  };
 
 
   return <section>
     <Container>
       <Row>
         <Col lg='12'>
-        <h4 className='mb-5'>Add Product</h4>
+        {
+          loading ? <h4 className='py-5 text-center fw-bold'>Loading...</h4> : <>
+          <h4 className='mb-5'>Add Product</h4>
         <Form onSubmit={addProduct}>
           <FormGroup className='form__group'>
           <span>Product title</span>
@@ -63,6 +117,7 @@ const AddProducts = () => {
           <span>Category</span>
           <select className='w-100 p-2'
            value={enterCategory} onChange={e=>setEnterCategory(e.target.value)} >
+           <option>Select Category</option>
             <option value="chair">Chair</option>
             <option value="sofa">Sofa</option>
             <option value="mobile">Mobile</option>
@@ -80,6 +135,9 @@ const AddProducts = () => {
         </div>  
         <button className='buy__btn' type='sumbit'>Add Product</button>
         </Form>
+
+          </>
+        }
         </Col>
       </Row>
     </Container>
