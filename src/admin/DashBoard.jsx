@@ -9,7 +9,9 @@ const DashBoard = () => {
 
   const {data:products} = useGetData('products')
   const {data:users} = useGetData('users')
-
+  const {data:orders} = useGetData('orders')
+  
+  const totalSales = orders.reduce((total, order) => total + order.totalAmount, 0);
 
 
   return <>
@@ -19,13 +21,13 @@ const DashBoard = () => {
         <Col className='lg-3'>
           <div className='revenue__box'>
             <h5>Total Sales</h5>
-            <span>$7890</span>
+            <span>${totalSales}</span>
           </div>
         </Col>
         <Col className='lg-3'>
         <div className='Order__box'>
             <h5>Orders</h5>
-            <span>7890</span>
+            <span>{orders.length}</span>
           </div>
         </Col>
         <Col className='lg-3'>

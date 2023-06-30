@@ -25,16 +25,6 @@ const AddProducts = () => {
   const addProduct = async(e) =>{
     e.preventDefault();
     setLoading(true)
-
-    // const product = {
-    //   title:enterTitle,
-    //   shortDesc:enterShortDesc,
-    //   description:enterDescription,
-    //   category:enterCategory,
-    //   price:enterPrice,
-    //   imgUrl:enterProductImg
-    // }
-
     // add product to the firebase database
     try {
       const docRef = await collection(db, 'products');
